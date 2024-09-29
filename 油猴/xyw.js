@@ -1,0 +1,1772 @@
+// ==UserScript==
+// @name         吉林工师校园网自动登录
+// @namespace    http://tampermonkey.net/
+// @version      1
+// @description  吉林工师校园网自动登录,自行配置账号和密码
+// @author       天玄
+// @match        http://111.26.29.113:7119/*
+// @match        http://111.26.29.113:7119/portalLogin.wlan
+
+// @grant        none
+// @license MIT
+// ==/UserScript==
+
+// 等待一段时间的函数
+function wait(t) {
+    return new Promise(resolve => setTimeout(resolve, t));
+}
+var accounts = [{
+	"account": "10015834002",
+	"password": "834002"
+}, {
+	"account": "10015834003",
+	"password": "834003"
+}, {
+	"account": "10015834004",
+	"password": "834004"
+}, {
+	"account": "10015834005",
+	"password": "834005"
+}, {
+	"account": "10015834009",
+	"password": "834009"
+}, {
+	"account": "10015834010",
+	"password": "834010"
+}, {
+	"account": "10015834011",
+	"password": "834011"
+}, {
+	"account": "10015834013",
+	"password": "834013"
+}, {
+	"account": "10015834015",
+	"password": "834015"
+}, {
+	"account": "10015834016",
+	"password": "834016"
+}, {
+	"account": "10015834018",
+	"password": "834018"
+}, {
+	"account": "10015834020",
+	"password": "834020"
+}, {
+	"account": "10015834025",
+	"password": "834025"
+}, {
+	"account": "10015834037",
+	"password": "834037"
+}, {
+	"account": "10015834039",
+	"password": "834039"
+}, {
+	"account": "10015834044",
+	"password": "834044"
+}, {
+	"account": "10015834048",
+	"password": "834048"
+}, {
+	"account": "10015834054",
+	"password": "834054"
+}, {
+	"account": "10015834056",
+	"password": "834056"
+}, {
+	"account": "10015834059",
+	"password": "834059"
+}, {
+	"account": "10015834060",
+	"password": "834060"
+}, {
+	"account": "10015834062",
+	"password": "834062"
+}, {
+	"account": "10015834065",
+	"password": "834065"
+}, {
+	"account": "10015834067",
+	"password": "834067"
+}, {
+	"account": "10015834072",
+	"password": "834072"
+}, {
+	"account": "10015834074",
+	"password": "834074"
+}, {
+	"account": "10015834077",
+	"password": "834077"
+}, {
+	"account": "10015834080",
+	"password": "834080"
+}, {
+	"account": "10015834081",
+	"password": "834081"
+}, {
+	"account": "10015834106",
+	"password": "834106"
+}, {
+	"account": "10015834109",
+	"password": "834109"
+}, {
+	"account": "10015834124",
+	"password": "834124"
+}, {
+	"account": "10015834130",
+	"password": "834130"
+}, {
+	"account": "10015834132",
+	"password": "834132"
+}, {
+	"account": "10015834138",
+	"password": "834138"
+}, {
+	"account": "10015834139",
+	"password": "834139"
+}, {
+	"account": "10015834141",
+	"password": "834141"
+}, {
+	"account": "10015834142",
+	"password": "834142"
+}, {
+	"account": "10015834153",
+	"password": "834153"
+}, {
+	"account": "10015834154",
+	"password": "834154"
+}, {
+	"account": "10015834155",
+	"password": "834155"
+}, {
+	"account": "10015834156",
+	"password": "834156"
+}, {
+	"account": "10015834164",
+	"password": "834164"
+}, {
+	"account": "10015834172",
+	"password": "834172"
+}, {
+	"account": "10015834184",
+	"password": "834184"
+}, {
+	"account": "10015834188",
+	"password": "834188"
+}, {
+	"account": "10015834196",
+	"password": "834196"
+}, {
+	"account": "10015834197",
+	"password": "834197"
+}, {
+	"account": "10015834198",
+	"password": "834198"
+}, {
+	"account": "10015834201",
+	"password": "834201"
+}, {
+	"account": "10015834202",
+	"password": "834202"
+}, {
+	"account": "10015834203",
+	"password": "834203"
+}, {
+	"account": "10015834206",
+	"password": "834206"
+}, {
+	"account": "10015834213",
+	"password": "834213"
+}, {
+	"account": "10015834215",
+	"password": "834215"
+}, {
+	"account": "10015834218",
+	"password": "834218"
+}, {
+	"account": "10015834222",
+	"password": "834222"
+}, {
+	"account": "10015834231",
+	"password": "834231"
+}, {
+	"account": "10015834236",
+	"password": "834236"
+}, {
+	"account": "10015834242",
+	"password": "834242"
+}, {
+	"account": "10015834248",
+	"password": "834248"
+}, {
+	"account": "10015834250",
+	"password": "834250"
+}, {
+	"account": "10015834251",
+	"password": "834251"
+}, {
+	"account": "10015834255",
+	"password": "834255"
+}, {
+	"account": "10015834256",
+	"password": "834256"
+}, {
+	"account": "10015834261",
+	"password": "834261"
+}, {
+	"account": "10015834263",
+	"password": "834263"
+}, {
+	"account": "10015834270",
+	"password": "834270"
+}, {
+	"account": "10015834271",
+	"password": "834271"
+}, {
+	"account": "10015834275",
+	"password": "834275"
+}, {
+	"account": "10015834277",
+	"password": "834277"
+}, {
+	"account": "10015834279",
+	"password": "834279"
+}, {
+	"account": "10015834284",
+	"password": "834284"
+}, {
+	"account": "10015834285",
+	"password": "834285"
+}, {
+	"account": "10015834286",
+	"password": "834286"
+}, {
+	"account": "10015834289",
+	"password": "834289"
+}, {
+	"account": "10015834290",
+	"password": "834290"
+}, {
+	"account": "10015834291",
+	"password": "834291"
+}, {
+	"account": "10015834292",
+	"password": "834292"
+}, {
+	"account": "10015834293",
+	"password": "834293"
+}, {
+	"account": "10015834295",
+	"password": "834295"
+}, {
+	"account": "10015834300",
+	"password": "834300"
+}, {
+	"account": "10015834303",
+	"password": "834303"
+}, {
+	"account": "10015834310",
+	"password": "834310"
+}, {
+	"account": "10015834318",
+	"password": "834318"
+}, {
+	"account": "10015834321",
+	"password": "834321"
+}, {
+	"account": "10015834322",
+	"password": "834322"
+}, {
+	"account": "10015834323",
+	"password": "834323"
+}, {
+	"account": "10015834325",
+	"password": "834325"
+}, {
+	"account": "10015834327",
+	"password": "834327"
+}, {
+	"account": "10015834328",
+	"password": "834328"
+}, {
+	"account": "10015834332",
+	"password": "834332"
+}, {
+	"account": "10015834337",
+	"password": "834337"
+}, {
+	"account": "10015834339",
+	"password": "834339"
+}, {
+	"account": "10015834342",
+	"password": "834342"
+}, {
+	"account": "10015834349",
+	"password": "834349"
+}, {
+	"account": "10015834354",
+	"password": "834354"
+}, {
+	"account": "10015834355",
+	"password": "834355"
+}, {
+	"account": "10015834356",
+	"password": "834356"
+}, {
+	"account": "10015834365",
+	"password": "834365"
+}, {
+	"account": "10015834367",
+	"password": "834367"
+}, {
+	"account": "10015834373",
+	"password": "834373"
+}, {
+	"account": "10015834374",
+	"password": "834374"
+}, {
+	"account": "10015834378",
+	"password": "834378"
+}, {
+	"account": "10015834379",
+	"password": "834379"
+}, {
+	"account": "10015834380",
+	"password": "834380"
+}, {
+	"account": "10015834381",
+	"password": "834381"
+}, {
+	"account": "10015834385",
+	"password": "834385"
+}, {
+	"account": "10015834390",
+	"password": "834390"
+}, {
+	"account": "10015834391",
+	"password": "834391"
+}, {
+	"account": "10015834395",
+	"password": "834395"
+}, {
+	"account": "10015834396",
+	"password": "834396"
+}, {
+	"account": "10015834403",
+	"password": "834403"
+}, {
+	"account": "10015834407",
+	"password": "834407"
+}, {
+	"account": "10015834417",
+	"password": "834417"
+}, {
+	"account": "10015834420",
+	"password": "834420"
+}, {
+	"account": "10015834423",
+	"password": "834423"
+}, {
+	"account": "10015834426",
+	"password": "834426"
+}, {
+	"account": "10015834429",
+	"password": "834429"
+}, {
+	"account": "10015834430",
+	"password": "834430"
+}, {
+	"account": "10015834434",
+	"password": "834434"
+}, {
+	"account": "10015834435",
+	"password": "834435"
+}, {
+	"account": "10015834440",
+	"password": "834440"
+}, {
+	"account": "10015834443",
+	"password": "834443"
+}, {
+	"account": "10015834447",
+	"password": "834447"
+}, {
+	"account": "10015834449",
+	"password": "834449"
+}, {
+	"account": "10015834450",
+	"password": "834450"
+}, {
+	"account": "10015834455",
+	"password": "834455"
+}, {
+	"account": "10015834456",
+	"password": "834456"
+}, {
+	"account": "10015834458",
+	"password": "834458"
+}, {
+	"account": "10015834459",
+	"password": "834459"
+}, {
+	"account": "10015834460",
+	"password": "834460"
+}, {
+	"account": "10015834461",
+	"password": "834461"
+}, {
+	"account": "10015834463",
+	"password": "834463"
+}, {
+	"account": "10015834464",
+	"password": "834464"
+}, {
+	"account": "10015834465",
+	"password": "834465"
+}, {
+	"account": "10015834466",
+	"password": "834466"
+}, {
+	"account": "10015834469",
+	"password": "834469"
+}, {
+	"account": "10015834471",
+	"password": "834471"
+}, {
+	"account": "10015834473",
+	"password": "834473"
+}, {
+	"account": "10015834476",
+	"password": "834476"
+}, {
+	"account": "10015834482",
+	"password": "834482"
+}, {
+	"account": "10015834483",
+	"password": "834483"
+}, {
+	"account": "10015834484",
+	"password": "834484"
+}, {
+	"account": "10015834485",
+	"password": "834485"
+}, {
+	"account": "10015834486",
+	"password": "834486"
+}, {
+	"account": "10015834489",
+	"password": "834489"
+}, {
+	"account": "10015834491",
+	"password": "834491"
+}, {
+	"account": "10015834498",
+	"password": "834498"
+}, {
+	"account": "10015834501",
+	"password": "834501"
+}, {
+	"account": "10015834502",
+	"password": "834502"
+}, {
+	"account": "10015834510",
+	"password": "834510"
+}, {
+	"account": "10015834511",
+	"password": "834511"
+}, {
+	"account": "10015834519",
+	"password": "834519"
+}, {
+	"account": "10015834523",
+	"password": "834523"
+}, {
+	"account": "10015834526",
+	"password": "834526"
+}, {
+	"account": "10015834527",
+	"password": "834527"
+}, {
+	"account": "10015834530",
+	"password": "834530"
+}, {
+	"account": "10015834531",
+	"password": "834531"
+}, {
+	"account": "10015834532",
+	"password": "834532"
+}, {
+	"account": "10015834535",
+	"password": "834535"
+}, {
+	"account": "10015834536",
+	"password": "834536"
+}, {
+	"account": "10015834537",
+	"password": "834537"
+}, {
+	"account": "10015834538",
+	"password": "834538"
+}, {
+	"account": "10015834540",
+	"password": "834540"
+}, {
+	"account": "10015834542",
+	"password": "834542"
+}, {
+	"account": "10015834547",
+	"password": "834547"
+}, {
+	"account": "10015834551",
+	"password": "834551"
+}, {
+	"account": "10015834554",
+	"password": "834554"
+}, {
+	"account": "10015834555",
+	"password": "834555"
+}, {
+	"account": "10015834558",
+	"password": "834558"
+}, {
+	"account": "10015834559",
+	"password": "834559"
+}, {
+	"account": "10015834562",
+	"password": "834562"
+}, {
+	"account": "10015834565",
+	"password": "834565"
+}, {
+	"account": "10015834567",
+	"password": "834567"
+}, {
+	"account": "10015834569",
+	"password": "834569"
+}, {
+	"account": "10015834573",
+	"password": "834573"
+}, {
+	"account": "10015834575",
+	"password": "834575"
+}, {
+	"account": "10015834590",
+	"password": "834590"
+}, {
+	"account": "10015834592",
+	"password": "834592"
+}, {
+	"account": "10015834594",
+	"password": "834594"
+}, {
+	"account": "10015834595",
+	"password": "834595"
+}, {
+	"account": "10015834600",
+	"password": "834600"
+}, {
+	"account": "10015834602",
+	"password": "834602"
+}, {
+	"account": "10015834604",
+	"password": "834604"
+}, {
+	"account": "10015834607",
+	"password": "834607"
+}, {
+	"account": "10015834615",
+	"password": "834615"
+}, {
+	"account": "10015834616",
+	"password": "834616"
+}, {
+	"account": "10015834619",
+	"password": "834619"
+}, {
+	"account": "10015834621",
+	"password": "834621"
+}, {
+	"account": "10015834627",
+	"password": "834627"
+}, {
+	"account": "10015834631",
+	"password": "834631"
+}, {
+	"account": "10015834643",
+	"password": "834643"
+}, {
+	"account": "10015834644",
+	"password": "834644"
+}, {
+	"account": "10015834646",
+	"password": "834646"
+}, {
+	"account": "10015834653",
+	"password": "834653"
+}, {
+	"account": "10015834654",
+	"password": "834654"
+}, {
+	"account": "10015834656",
+	"password": "834656"
+}, {
+	"account": "10015834659",
+	"password": "834659"
+}, {
+	"account": "10015834661",
+	"password": "834661"
+}, {
+	"account": "10015834663",
+	"password": "834663"
+}, {
+	"account": "10015834671",
+	"password": "834671"
+}, {
+	"account": "10015834672",
+	"password": "834672"
+}, {
+	"account": "10015834674",
+	"password": "834674"
+}, {
+	"account": "10015834676",
+	"password": "834676"
+}, {
+	"account": "10015834678",
+	"password": "834678"
+}, {
+	"account": "10015834680",
+	"password": "834680"
+}, {
+	"account": "10015834684",
+	"password": "834684"
+}, {
+	"account": "10015834685",
+	"password": "834685"
+}, {
+	"account": "10015834687",
+	"password": "834687"
+}, {
+	"account": "10015834690",
+	"password": "834690"
+}, {
+	"account": "10015834698",
+	"password": "834698"
+}, {
+	"account": "10015834699",
+	"password": "834699"
+}, {
+	"account": "10015834700",
+	"password": "834700"
+}, {
+	"account": "10015834702",
+	"password": "834702"
+}, {
+	"account": "10015834708",
+	"password": "834708"
+}, {
+	"account": "10015834712",
+	"password": "834712"
+}, {
+	"account": "10015834713",
+	"password": "834713"
+}, {
+	"account": "10015834714",
+	"password": "834714"
+}, {
+	"account": "10015834719",
+	"password": "834719"
+}, {
+	"account": "10015834720",
+	"password": "834720"
+}, {
+	"account": "10015834721",
+	"password": "834721"
+}, {
+	"account": "10015834722",
+	"password": "834722"
+}, {
+	"account": "10015834723",
+	"password": "834723"
+}, {
+	"account": "10015834725",
+	"password": "834725"
+}, {
+	"account": "10015834730",
+	"password": "834730"
+}, {
+	"account": "10015834732",
+	"password": "834732"
+}, {
+	"account": "10015834734",
+	"password": "834734"
+}, {
+	"account": "10015834735",
+	"password": "834735"
+}, {
+	"account": "10015834737",
+	"password": "834737"
+}, {
+	"account": "10015834738",
+	"password": "834738"
+}, {
+	"account": "10015834741",
+	"password": "834741"
+}, {
+	"account": "10015834742",
+	"password": "834742"
+}, {
+	"account": "10015834744",
+	"password": "834744"
+}, {
+	"account": "10015834747",
+	"password": "834747"
+}, {
+	"account": "10015834750",
+	"password": "834750"
+}, {
+	"account": "10015834753",
+	"password": "834753"
+}, {
+	"account": "10015834754",
+	"password": "834754"
+}, {
+	"account": "10015834755",
+	"password": "834755"
+}, {
+	"account": "10015834757",
+	"password": "834757"
+}, {
+	"account": "10015834758",
+	"password": "834758"
+}, {
+	"account": "10015834759",
+	"password": "834759"
+}, {
+	"account": "10015834761",
+	"password": "834761"
+}, {
+	"account": "10015834764",
+	"password": "834764"
+}, {
+	"account": "10015834767",
+	"password": "834767"
+}, {
+	"account": "10015834769",
+	"password": "834769"
+}, {
+	"account": "10015834774",
+	"password": "834774"
+}, {
+	"account": "10015834781",
+	"password": "834781"
+}, {
+	"account": "10015834782",
+	"password": "834782"
+}, {
+	"account": "10015834791",
+	"password": "834791"
+}, {
+	"account": "10015834793",
+	"password": "834793"
+}, {
+	"account": "10015834798",
+	"password": "834798"
+}, {
+	"account": "10015834803",
+	"password": "834803"
+}, {
+	"account": "10015834804",
+	"password": "834804"
+}, {
+	"account": "10015834807",
+	"password": "834807"
+}, {
+	"account": "10015834811",
+	"password": "834811"
+}, {
+	"account": "10015834812",
+	"password": "834812"
+}, {
+	"account": "10015834813",
+	"password": "834813"
+}, {
+	"account": "10015834817",
+	"password": "834817"
+}, {
+	"account": "10015834818",
+	"password": "834818"
+}, {
+	"account": "10015834823",
+	"password": "834823"
+}, {
+	"account": "10015834824",
+	"password": "834824"
+}, {
+	"account": "10015834826",
+	"password": "834826"
+}, {
+	"account": "10015834827",
+	"password": "834827"
+}, {
+	"account": "10015834837",
+	"password": "834837"
+}, {
+	"account": "10015834840",
+	"password": "834840"
+}, {
+	"account": "10015834847",
+	"password": "834847"
+}, {
+	"account": "10015834852",
+	"password": "834852"
+}, {
+	"account": "10015834854",
+	"password": "834854"
+}, {
+	"account": "10015834861",
+	"password": "834861"
+}, {
+	"account": "10015834865",
+	"password": "834865"
+}, {
+	"account": "10015834869",
+	"password": "834869"
+}, {
+	"account": "10015834876",
+	"password": "834876"
+}, {
+	"account": "10015834877",
+	"password": "834877"
+}, {
+	"account": "10015834884",
+	"password": "834884"
+}, {
+	"account": "10015834890",
+	"password": "834890"
+}, {
+	"account": "10015834894",
+	"password": "834894"
+}, {
+	"account": "10015834898",
+	"password": "834898"
+}, {
+	"account": "10015834909",
+	"password": "834909"
+}, {
+	"account": "10015834911",
+	"password": "834911"
+}, {
+	"account": "10015834912",
+	"password": "834912"
+}, {
+	"account": "10015834916",
+	"password": "834916"
+}, {
+	"account": "10015834918",
+	"password": "834918"
+}, {
+	"account": "10015834919",
+	"password": "834919"
+}, {
+	"account": "10015834922",
+	"password": "834922"
+}, {
+	"account": "10015834934",
+	"password": "834934"
+}, {
+	"account": "10015834935",
+	"password": "834935"
+}, {
+	"account": "10015834936",
+	"password": "834936"
+}, {
+	"account": "10015834937",
+	"password": "834937"
+}, {
+	"account": "10015834940",
+	"password": "834940"
+}, {
+	"account": "10015834941",
+	"password": "834941"
+}, {
+	"account": "10015834950",
+	"password": "834950"
+}, {
+	"account": "10015834957",
+	"password": "834957"
+}, {
+	"account": "10015834964",
+	"password": "834964"
+}, {
+	"account": "10015834966",
+	"password": "834966"
+}, {
+	"account": "10015834973",
+	"password": "834973"
+}, {
+	"account": "10015834976",
+	"password": "834976"
+}, {
+	"account": "10015834980",
+	"password": "834980"
+}, {
+	"account": "10015834981",
+	"password": "834981"
+}, {
+	"account": "10015834982",
+	"password": "834982"
+}, {
+	"account": "10015834983",
+	"password": "834983"
+}, {
+	"account": "10015834988",
+	"password": "834988"
+}, {
+	"account": "10015834989",
+	"password": "834989"
+}, {
+	"account": "10015834992",
+	"password": "834992"
+}, {
+	"account": "10015834994",
+	"password": "834994"
+}, {
+	"account": "10015834995",
+	"password": "834995"
+}, {
+	"account": "10015834996",
+	"password": "834996"
+}, {
+	"account": "10015835004",
+	"password": "835004"
+}, {
+	"account": "10015835006",
+	"password": "835006"
+}, {
+	"account": "10015835007",
+	"password": "835007"
+}, {
+	"account": "10015835015",
+	"password": "835015"
+}, {
+	"account": "10015835022",
+	"password": "835022"
+}, {
+	"account": "10015835024",
+	"password": "835024"
+}, {
+	"account": "10015835027",
+	"password": "835027"
+}, {
+	"account": "10015835029",
+	"password": "835029"
+}, {
+	"account": "10015835032",
+	"password": "835032"
+}, {
+	"account": "10015835035",
+	"password": "835035"
+}, {
+	"account": "10015835036",
+	"password": "835036"
+}, {
+	"account": "10015835040",
+	"password": "835040"
+}, {
+	"account": "10015835045",
+	"password": "835045"
+}, {
+	"account": "10015835051",
+	"password": "835051"
+}, {
+	"account": "10015835054",
+	"password": "835054"
+}, {
+	"account": "10015835056",
+	"password": "835056"
+}, {
+	"account": "10015835058",
+	"password": "835058"
+}, {
+	"account": "10015835059",
+	"password": "835059"
+}, {
+	"account": "10015835060",
+	"password": "835060"
+}, {
+	"account": "10015835063",
+	"password": "835063"
+}, {
+	"account": "10015835065",
+	"password": "835065"
+}, {
+	"account": "10015835071",
+	"password": "835071"
+}, {
+	"account": "10015835076",
+	"password": "835076"
+}, {
+	"account": "10015835077",
+	"password": "835077"
+}, {
+	"account": "10015835082",
+	"password": "835082"
+}, {
+	"account": "10015835085",
+	"password": "835085"
+}, {
+	"account": "10015835091",
+	"password": "835091"
+}, {
+	"account": "10015835092",
+	"password": "835092"
+}, {
+	"account": "10015835094",
+	"password": "835094"
+}, {
+	"account": "10015835100",
+	"password": "835100"
+}, {
+	"account": "10015835101",
+	"password": "835101"
+}, {
+	"account": "10015835102",
+	"password": "835102"
+}, {
+	"account": "10015835108",
+	"password": "835108"
+}, {
+	"account": "10015835111",
+	"password": "835111"
+}, {
+	"account": "10015835112",
+	"password": "835112"
+}, {
+	"account": "10015835114",
+	"password": "835114"
+}, {
+	"account": "10015835115",
+	"password": "835115"
+}, {
+	"account": "10015835118",
+	"password": "835118"
+}, {
+	"account": "10015835120",
+	"password": "835120"
+}, {
+	"account": "10015835126",
+	"password": "835126"
+}, {
+	"account": "10015835129",
+	"password": "835129"
+}, {
+	"account": "10015835130",
+	"password": "835130"
+}, {
+	"account": "10015835131",
+	"password": "835131"
+}, {
+	"account": "10015835134",
+	"password": "835134"
+}, {
+	"account": "10015835135",
+	"password": "835135"
+}, {
+	"account": "10015835136",
+	"password": "835136"
+}, {
+	"account": "10015835140",
+	"password": "835140"
+}, {
+	"account": "10015835146",
+	"password": "835146"
+}, {
+	"account": "10015835147",
+	"password": "835147"
+}, {
+	"account": "10015835148",
+	"password": "835148"
+}, {
+	"account": "10015835149",
+	"password": "835149"
+}, {
+	"account": "10015835155",
+	"password": "835155"
+}, {
+	"account": "10015835156",
+	"password": "835156"
+}, {
+	"account": "10015835159",
+	"password": "835159"
+}, {
+	"account": "10015835167",
+	"password": "835167"
+}, {
+	"account": "10015835173",
+	"password": "835173"
+}, {
+	"account": "10015835179",
+	"password": "835179"
+}, {
+	"account": "10015835180",
+	"password": "835180"
+}, {
+	"account": "10015835190",
+	"password": "835190"
+}, {
+	"account": "10015835192",
+	"password": "835192"
+}, {
+	"account": "10015835199",
+	"password": "835199"
+}, {
+	"account": "10015835203",
+	"password": "835203"
+}, {
+	"account": "10015835208",
+	"password": "835208"
+}, {
+	"account": "10015835209",
+	"password": "835209"
+}, {
+	"account": "10015835212",
+	"password": "835212"
+}, {
+	"account": "10015835216",
+	"password": "835216"
+}, {
+	"account": "10015835222",
+	"password": "835222"
+}, {
+	"account": "10015835226",
+	"password": "835226"
+}, {
+	"account": "10015835228",
+	"password": "835228"
+}, {
+	"account": "10015835231",
+	"password": "835231"
+}, {
+	"account": "10015835234",
+	"password": "835234"
+}, {
+	"account": "10015835235",
+	"password": "835235"
+}, {
+	"account": "10015835237",
+	"password": "835237"
+}, {
+	"account": "10015835245",
+	"password": "835245"
+}, {
+	"account": "10015835248",
+	"password": "835248"
+}, {
+	"account": "10015835252",
+	"password": "835252"
+}, {
+	"account": "10015835257",
+	"password": "835257"
+}, {
+	"account": "10015835258",
+	"password": "835258"
+}, {
+	"account": "10015835259",
+	"password": "835259"
+}, {
+	"account": "10015835260",
+	"password": "835260"
+}, {
+	"account": "10015835261",
+	"password": "835261"
+}, {
+	"account": "10015835264",
+	"password": "835264"
+}, {
+	"account": "10015835277",
+	"password": "835277"
+}, {
+	"account": "10015835278",
+	"password": "835278"
+}, {
+	"account": "10015835279",
+	"password": "835279"
+}, {
+	"account": "10015835282",
+	"password": "835282"
+}, {
+	"account": "10015835285",
+	"password": "835285"
+}, {
+	"account": "10015835286",
+	"password": "835286"
+}, {
+	"account": "10015835288",
+	"password": "835288"
+}, {
+	"account": "10015835289",
+	"password": "835289"
+}, {
+	"account": "10015835302",
+	"password": "835302"
+}, {
+	"account": "10015835305",
+	"password": "835305"
+}, {
+	"account": "10015835312",
+	"password": "835312"
+}, {
+	"account": "10015835313",
+	"password": "835313"
+}, {
+	"account": "10015835315",
+	"password": "835315"
+}, {
+	"account": "10015835316",
+	"password": "835316"
+}, {
+	"account": "10015835317",
+	"password": "835317"
+}, {
+	"account": "10015835318",
+	"password": "835318"
+}, {
+	"account": "10015835322",
+	"password": "835322"
+}, {
+	"account": "10015835325",
+	"password": "835325"
+}, {
+	"account": "10015835328",
+	"password": "835328"
+}, {
+	"account": "10015835334",
+	"password": "835334"
+}, {
+	"account": "10015835338",
+	"password": "835338"
+}, {
+	"account": "10015835345",
+	"password": "835345"
+}, {
+	"account": "10015835347",
+	"password": "835347"
+}, {
+	"account": "10015835361",
+	"password": "835361"
+}, {
+	"account": "10015835362",
+	"password": "835362"
+}, {
+	"account": "10015835372",
+	"password": "835372"
+}, {
+	"account": "10015835383",
+	"password": "835383"
+}, {
+	"account": "10015835386",
+	"password": "835386"
+}, {
+	"account": "10015835397",
+	"password": "835397"
+}, {
+	"account": "10015835398",
+	"password": "835398"
+}, {
+	"account": "10015835408",
+	"password": "835408"
+}, {
+	"account": "10015835414",
+	"password": "835414"
+}, {
+	"account": "10015835415",
+	"password": "835415"
+}, {
+	"account": "10015835424",
+	"password": "835424"
+}, {
+	"account": "10015835438",
+	"password": "835438"
+}, {
+	"account": "10015835442",
+	"password": "835442"
+}, {
+	"account": "10015835446",
+	"password": "835446"
+}, {
+	"account": "10015835450",
+	"password": "835450"
+}, {
+	"account": "10015835451",
+	"password": "835451"
+}, {
+	"account": "10015835453",
+	"password": "835453"
+}, {
+	"account": "10015835456",
+	"password": "835456"
+}, {
+	"account": "10015835457",
+	"password": "835457"
+}, {
+	"account": "10015835461",
+	"password": "835461"
+}, {
+	"account": "10015835470",
+	"password": "835470"
+}, {
+	"account": "10015835473",
+	"password": "835473"
+}, {
+	"account": "10015835474",
+	"password": "835474"
+}, {
+	"account": "10015835475",
+	"password": "835475"
+}, {
+	"account": "10015835478",
+	"password": "835478"
+}, {
+	"account": "10015835479",
+	"password": "835479"
+}, {
+	"account": "10015835484",
+	"password": "835484"
+}, {
+	"account": "10015835486",
+	"password": "835486"
+}, {
+	"account": "10015835487",
+	"password": "835487"
+}, {
+	"account": "10015835494",
+	"password": "835494"
+}, {
+	"account": "10015835501",
+	"password": "835501"
+}, {
+	"account": "10015835508",
+	"password": "835508"
+}, {
+	"account": "10015835513",
+	"password": "835513"
+}, {
+	"account": "10015835516",
+	"password": "835516"
+}, {
+	"account": "10015835526",
+	"password": "835526"
+}, {
+	"account": "10015835527",
+	"password": "835527"
+}, {
+	"account": "10015835529",
+	"password": "835529"
+}, {
+	"account": "10015835531",
+	"password": "835531"
+}, {
+	"account": "10015835540",
+	"password": "835540"
+}, {
+	"account": "10015835543",
+	"password": "835543"
+}, {
+	"account": "10015835546",
+	"password": "835546"
+}, {
+	"account": "10015835547",
+	"password": "835547"
+}, {
+	"account": "10015835550",
+	"password": "835550"
+}, {
+	"account": "10015835551",
+	"password": "835551"
+}, {
+	"account": "10015835561",
+	"password": "835561"
+}, {
+	"account": "10015835570",
+	"password": "835570"
+}, {
+	"account": "10015835574",
+	"password": "835574"
+}, {
+	"account": "10015835577",
+	"password": "835577"
+}, {
+	"account": "10015835582",
+	"password": "835582"
+}, {
+	"account": "10015835594",
+	"password": "835594"
+}, {
+	"account": "10015835599",
+	"password": "835599"
+}, {
+	"account": "10015835600",
+	"password": "835600"
+}, {
+	"account": "10015835608",
+	"password": "835608"
+}, {
+	"account": "10015835611",
+	"password": "835611"
+}, {
+	"account": "10015835614",
+	"password": "835614"
+}, {
+	"account": "10015835620",
+	"password": "835620"
+}, {
+	"account": "10015835629",
+	"password": "835629"
+}, {
+	"account": "10015835630",
+	"password": "835630"
+}, {
+	"account": "10015835631",
+	"password": "835631"
+}, {
+	"account": "10015835632",
+	"password": "835632"
+}, {
+	"account": "10015835636",
+	"password": "835636"
+}, {
+	"account": "10015835637",
+	"password": "835637"
+}, {
+	"account": "10015835643",
+	"password": "835643"
+}, {
+	"account": "10015835645",
+	"password": "835645"
+}, {
+	"account": "10015835646",
+	"password": "835646"
+}, {
+	"account": "10015835664",
+	"password": "835664"
+}, {
+	"account": "10015835666",
+	"password": "835666"
+}, {
+	"account": "10015835667",
+	"password": "835667"
+}, {
+	"account": "10015835679",
+	"password": "835679"
+}, {
+	"account": "10015835681",
+	"password": "835681"
+}, {
+	"account": "10015835685",
+	"password": "835685"
+}, {
+	"account": "10015835689",
+	"password": "835689"
+}, {
+	"account": "10015835691",
+	"password": "835691"
+}, {
+	"account": "10015835693",
+	"password": "835693"
+}, {
+	"account": "10015835698",
+	"password": "835698"
+}, {
+	"account": "10015835699",
+	"password": "835699"
+}, {
+	"account": "10015835701",
+	"password": "835701"
+}, {
+	"account": "10015835704",
+	"password": "835704"
+}, {
+	"account": "10015835708",
+	"password": "835708"
+}, {
+	"account": "10015835712",
+	"password": "835712"
+}, {
+	"account": "10015835713",
+	"password": "835713"
+}, {
+	"account": "10015835723",
+	"password": "835723"
+}, {
+	"account": "10015835724",
+	"password": "835724"
+}, {
+	"account": "10015835727",
+	"password": "835727"
+}, {
+	"account": "10015835734",
+	"password": "835734"
+}, {
+	"account": "10015835735",
+	"password": "835735"
+}, {
+	"account": "10015835737",
+	"password": "835737"
+}, {
+	"account": "10015835753",
+	"password": "835753"
+}, {
+	"account": "10015835754",
+	"password": "835754"
+}, {
+	"account": "10015835756",
+	"password": "835756"
+}, {
+	"account": "10015835763",
+	"password": "835763"
+}, {
+	"account": "10015835764",
+	"password": "835764"
+}, {
+	"account": "10015835768",
+	"password": "835768"
+}, {
+	"account": "10015835776",
+	"password": "835776"
+}, {
+	"account": "10015835777",
+	"password": "835777"
+}, {
+	"account": "10015835778",
+	"password": "835778"
+}, {
+	"account": "10015835779",
+	"password": "835779"
+}, {
+	"account": "10015835780",
+	"password": "835780"
+}, {
+	"account": "10015835781",
+	"password": "835781"
+}, {
+	"account": "10015835789",
+	"password": "835789"
+}, {
+	"account": "10015835792",
+	"password": "835792"
+}, {
+	"account": "10015835795",
+	"password": "835795"
+}, {
+	"account": "10015835797",
+	"password": "835797"
+}, {
+	"account": "10015835801",
+	"password": "835801"
+}, {
+	"account": "10015835804",
+	"password": "835804"
+}, {
+	"account": "10015835806",
+	"password": "835806"
+}, {
+	"account": "10015835811",
+	"password": "835811"
+}, {
+	"account": "10015835817",
+	"password": "835817"
+}, {
+	"account": "10015835818",
+	"password": "835818"
+}, {
+	"account": "10015835819",
+	"password": "835819"
+}, {
+	"account": "10015835824",
+	"password": "835824"
+}, {
+	"account": "10015835828",
+	"password": "835828"
+}, {
+	"account": "10015835829",
+	"password": "835829"
+}, {
+	"account": "10015835832",
+	"password": "835832"
+}, {
+	"account": "10015835834",
+	"password": "835834"
+}, {
+	"account": "10015835839",
+	"password": "835839"
+}, {
+	"account": "10015835840",
+	"password": "835840"
+}, {
+	"account": "10015835842",
+	"password": "835842"
+}, {
+	"account": "10015835847",
+	"password": "835847"
+}, {
+	"account": "10015835854",
+	"password": "835854"
+}, {
+	"account": "10015835857",
+	"password": "835857"
+}, {
+	"account": "10015835864",
+	"password": "835864"
+}, {
+	"account": "10015835869",
+	"password": "835869"
+}, {
+	"account": "10015835871",
+	"password": "835871"
+}, {
+	"account": "10015835873",
+	"password": "835873"
+}, {
+	"account": "10015835876",
+	"password": "835876"
+}, {
+	"account": "10015835877",
+	"password": "835877"
+}, {
+	"account": "10015835882",
+	"password": "835882"
+}, {
+	"account": "10015835883",
+	"password": "835883"
+}, {
+	"account": "10015835884",
+	"password": "835884"
+}, {
+	"account": "10015835886",
+	"password": "835886"
+}, {
+	"account": "10015835888",
+	"password": "835888"
+}, {
+	"account": "10015835900",
+	"password": "835900"
+}, {
+	"account": "10015835903",
+	"password": "835903"
+}, {
+	"account": "10015835907",
+	"password": "835907"
+}, {
+	"account": "10015835910",
+	"password": "835910"
+}, {
+	"account": "10015835914",
+	"password": "835914"
+}, {
+	"account": "10015835919",
+	"password": "835919"
+}, {
+	"account": "10015835922",
+	"password": "835922"
+}, {
+	"account": "10015835935",
+	"password": "835935"
+}, {
+	"account": "10015835938",
+	"password": "835938"
+}, {
+	"account": "10015835943",
+	"password": "835943"
+}, {
+	"account": "10015835947",
+	"password": "835947"
+}, {
+	"account": "10015835950",
+	"password": "835950"
+}, {
+	"account": "10015835954",
+	"password": "835954"
+}, {
+	"account": "10015835957",
+	"password": "835957"
+}, {
+	"account": "10015835961",
+	"password": "835961"
+}, {
+	"account": "10015835968",
+	"password": "835968"
+}, {
+	"account": "10015835970",
+	"password": "835970"
+}, {
+	"account": "10015835972",
+	"password": "835972"
+}, {
+	"account": "10015835975",
+	"password": "835975"
+}, {
+	"account": "10015835977",
+	"password": "835977"
+}, {
+	"account": "10015835984",
+	"password": "835984"
+}, {
+	"account": "10015835990",
+	"password": "835990"
+}, {
+	"account": "10015835999",
+	"password": "835999"
+}]
+
+
+
+
+const randomAccount = accounts[Math.floor(Math.random() * accounts.length)];
+
+
+// Account,Password 分别是账号和密码
+//var Account = "10015834114";
+//var Password = "101619";
+
+
+var inforAccount = 'Wp_user';
+var inforPassword = "Wp_password";
+var inforXywlogin = "Wp_submit";
+
+// 登录
+async function xywlogin() {
+    if (document.getElementById(inforAccount)) {
+        var Account = randomAccount.account
+        var Password = randomAccount.password
+        //console.log(Account,Password);
+
+        document.getElementById(inforAccount).value = Account;
+        document.getElementById(inforPassword).value = Password;
+        await wait(200); // 等待 2 秒
+        document.getElementById(inforXywlogin).click();
+        console.log("尝试登录");
+        await wait(1000); // 等待 2 秒
+        //document.getElementById("formForce").submit();
+        //console.log("弹窗成功");
+
+
+    }
+
+}
+
+async function xywstop() {
+    if (document.querySelector("#dialog-confirm > p > span")) {
+        console.log("已在线!取消登录");
+        document.querySelector("body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.no-close\\,ui-dialog-titlebar.ui-dialog-buttons.ui-draggable > div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div > button:nth-child(2)").click();
+    } else xywlogin();
+
+
+}
+
+
+
+(function() {
+    'use strict';
+   // xywlogin();
+    xywstop()
+})();
