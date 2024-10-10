@@ -1757,8 +1757,10 @@ async function xywstop() {
         console.log("已在线!取消登录");
         document.querySelector("body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.no-close\\,ui-dialog-titlebar.ui-dialog-buttons.ui-draggable > div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div > button:nth-child(2)").click();
     } else if (document.querySelector("#info") && document.querySelector("#info").textContent === '登录认证失败，用户名或密码错误！') {
+	console.log("用户名或密码错误");    
         document.querySelector("body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.no-close\\.ui-dialog-buttons\\.ui-draggable > div\\.ui-dialog-buttonpane\\.ui-widget-content\\.ui-helper-clearfix > div > button").click();
     } else if (document.querySelector("#info") && document.querySelector("#info").textContent === '系统正忙，请稍候重试') {
+	console.log("系统正忙，请稍候重试");    
         getLocalIP((ip) => {
             console.log('Local IP:', ip);
             window.location.href = `http://111.26.29.113:7119/portal.wlan?wlanacname=&wlanacip=211.137.223.242&wlanuserip=${ip}&ssid=edu`;
