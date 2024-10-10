@@ -5,8 +5,6 @@
 // @description  吉林工师校园网自动登录,自行配置账号和密码
 // @author       天玄
 // @match        http://111.26.29.113:7119/*
-// @match        http://111.26.29.113:7119/portalLogin.wlan
-
 // @grant        none
 // @license MIT
 // ==/UserScript==
