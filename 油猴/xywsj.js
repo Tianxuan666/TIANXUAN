@@ -1729,24 +1729,24 @@ const randomAccount = accounts[Math.floor(Math.random() * accounts.length)];
 //var Password = "101619";
 
 
-var inforAccount = '#Wp_user';
-var inforPassword = "#Wp_password";
-var inforXywlogin = "#staticloginbuttonid";
+var inforAccount = 'Wp_user';
+var inforPassword = "Wp_password";
+var inforXywlogin = "staticloginbuttonid";
 
 // 登录
 async function xywlogin() {
-    if (document.querySelector(inforAccount)) {
+    if (document.getElementById(inforAccount)) {
         var Account = randomAccount.account
         var Password = randomAccount.password
         //console.log(Account,Password);
 
-        document.querySelector(inforAccount).value = Account;
-        document.querySelector(inforPassword).value = Password;
+        document.getElementById(inforAccount).value = Account;
+        document.getElementById(inforPassword).value = Password;
         await wait(200); // 等待 2 秒
-        document.querySelector(inforXywlogin).click();
+        document.getElementById(inforXywlogin).click();
         console.log("尝试登录");
         await wait(1000); // 等待 2 秒
-        //document.querySelector("formForce").submit();
+        //document.getElementById("formForce").submit();
         //console.log("弹窗成功");
 
 
@@ -1757,18 +1757,45 @@ async function xywlogin() {
 async function xywstop() {
     if (document.querySelector("#dialog-confirm > p > span")) {
         console.log("已在线!取消登录");
- 
         document.querySelector("body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.no-close\\,ui-dialog-titlebar.ui-dialog-buttons.ui-draggable > div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div > button:nth-child(2)").click();
-      
-    } else xywlogin();
+    } else if(document.querySelector("#info").textContent === '登录认证失败，用户名或密码错误！')) {
+document.querySelector("body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.no-close.ui-dialog-buttons.ui-draggable > div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div > button").click();
+
+} else if(if (document.querySelector("#info").textContent === '系统正忙，请稍候重试')) {
+	    getLocalIP((ip) => {
+console.log('Local IP:', ip);
+window.location.href=`http://111.26.29.113:7119/portal.wlan?wlanacname=&wlanacip=211.137.223.242&wlanuserip=${ip}&ssid=edu`
+});
+} else xywlogin();
 
 
 }
+
+function getLocalIP(callback) {
+  const pc = new RTCPeerConnection({ iceServers: [] });
+  const noop = () => {};
+  pc.createDataChannel(""); // create a bogus data channel
+  pc.createOffer(pc.setLocalDescription.bind(pc), noop); // create offer and set local description
+
+  pc.onicecandidate = (ice) => {
+    if (ice && ice.candidate && ice.candidate.candidate) {
+      const myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3})/.exec(ice.candidate.candidate)[1];
+      callback(myIP);
+    }
+  };
+
+  pc.oniceconnectionstatechange = () => {
+    if (pc.iceConnectionState === 'connected') {
+      pc.onicecandidate = noop;
+    }
+  };
+}
+
 
 
 
 (function() {
     'use strict';
    // xywlogin();
-    xywstop()
+   xywstop()
 })();
