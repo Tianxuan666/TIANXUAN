@@ -1731,7 +1731,7 @@ const randomAccount = accounts[Math.floor(Math.random() * accounts.length)];
 
 var inforAccount = 'Wp_user';
 var inforPassword = "Wp_password";
-var inforXywlogin = "staticloginbuttonid";
+var inforXywlogin = "#staticloginbuttonid";
 
 // 登录
 async function xywlogin() {
@@ -1743,7 +1743,7 @@ async function xywlogin() {
         document.getElementById(inforAccount).value = Account;
         document.getElementById(inforPassword).value = Password;
         await wait(200); // 等待 2 秒
-        document.getElementById(inforXywlogin).click();
+        document.querySelector(inforXywlogin).click();
         console.log("尝试登录");
         await wait(1000); // 等待 2 秒
         //document.getElementById("formForce").submit();
