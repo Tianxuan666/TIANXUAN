@@ -1738,12 +1738,12 @@ async function xywlogin() {
     if (document.getElementById(inforAccount)) {
         var Account = randomAccount.account
         var Password = randomAccount.password
-        //console.log(Account,Password);
+        console.log(Account,Password);
 
         document.getElementById(inforAccount).value = Account;
         document.getElementById(inforPassword).value = Password;
         await wait(200); // 等待 2 秒
-        document.querySelector(inforXywlogin).click();
+        document.querySelector("#staticloginbuttonid").click()
         console.log("尝试登录");
         await wait(1000); // 等待 2 秒
         //document.getElementById("formForce").submit();
